@@ -1,0 +1,22 @@
+#!/usr/bin/bash
+
+# STEP 1: Update system and install required tools
+sudo dnf update -y
+sudo dnf install -y git maven wget fontconfig
+
+# STEP 2: Add Jenkins Repository
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+
+# STEP 3: Install Java versions
+# Java 17 is REQUIRED to run the Jenkins service
+sudo dnf install -y java-17-openjdk-devel
+# Java 8 is REQUIRED for your specific project build
+sudo dnf install -y java-1.8.0-openjdk-devel
+
+# STEP 4: Install Jenkins
+sudo dnf install -y jenkins
+
+# STEP 5: Start and Enable Jenkins
+sudo systemctl daemon-reload
+sudo systemctl enable --now jenkins
